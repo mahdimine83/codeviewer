@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ورود به داشبورد مدیریت معدن - آذرین سنگ الوند</title>
+  
+  <!-- فونت وزیر (Vazirmatn) -->
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet">
+  <!-- Remixicon for icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Notyf CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css" rel="stylesheet">
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+
+  <style>
+    :root {
+      --primary: #5a2e8d;
+      --primary-dark: #4a2573;
+      --primary-hover: #6b3fa0;
+      --secondary: #ffd700;
+      --background: #f8fafc;
+      --text-primary: #2c3e50;
+      --white: #ffffff;
+      --border-radius: 12px;
+      --box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      --transition: all 0.3s ease;
+      --gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    }
+
+    /* ------------------------ صفحه ورود ------------------------ */
+    .page-wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: linear-gradient(135deg, rgba(90,46,141,0.05) 0%, rgba(74,37,115,0.05) 100%);
+    }
+    .brand-header {
+      background: var(--gradient);
+      padding: 1.5rem 0;
+      color: var(--white);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .brand-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="rgba(255,255,255,0.05)" width="100" height="100"/></svg>');
+      opacity: 0.1;
+    }
+    .company-logo {
+      width: 120px;
+      background: var(--white);
+      padding: 10px;
+      border-radius: var(--border-radius);
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: var(--transition);
+    }
+    .company-logo:hover {
+      transform: scale(1.05);
+    }
+    .login-container {
+      max-width: 480px;
+      margin: -60px auto 2rem;
+      background: var(--white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+      transition: var(--transition);
+    }
+    .login-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(90,46,141,0.2);
+    }
+    .login-header {
+      background: linear-gradient(to right, rgba(90,46,141,0.03), rgba(90,46,141,0.02));
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(90,46,141,0.1);
+    }
+    .login-header h2 {
+      color: var(--primary);
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .login-form {
+      padding: 2rem;
+    }
+    .form-floating {
+      margin-bottom: 1.5rem;
+    }
+    .form-control {
+      height: 3.5rem;
+      padding: 1rem;
+      border: 2px solid rgba(90,46,141,0.1);
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(90,46,141,0.1);
+    }
+    .btn-login {
+      background: var(--gradient);
+      color: var(--white);
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: var(--border-radius);
+      font-size: 1.1rem;
+      width: 100%;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-login:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(90,46,141,0.2);
+    }
+    .loading-spinner {
+      display: none;
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: var(--white);
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 10px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .fade-in-up {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .footer {
+      background: var(--primary);
+      color: var(--white);
+      padding: 1rem 0;
+      text-align: center;
+    }
+    .footer a {
+      color: var(--secondary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    .footer a:hover {
+      color: var(--white);
+      text-decoration: underline;
+    }
+
+    /* ------------------------ داشبورد ------------------------ */
+    .navbar-custom {
+      background: var(--primary);
+      box-shadow: var(--box-shadow);
+    }
+    .navbar-custom .navbar-brand,
+    .navbar-custom .nav-link {
+      color: var(--white) !important;
+      font-weight: 500;
+    }
+    /* بخش آپلود فایل در داشبورد */
+    #uploadPrompt {
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeeba;
+      padding: 15px 20px;
+      border-radius: var(--border-radius);
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .file-upload-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    .upload-btn {
+      background: var(--primary);
+      color: var(--white);
+      padding: 10px 20px;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .upload-btn:hover {
+      background: var(--primary-hover);
+    }
+    .file-upload-input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+    /* کارت‌ها و جدول در داشبورد */
+    .card {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+      margin-bottom: 20px;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+    }
+    .btn-custom {
+      background: var(--primary);
+      border: none;
+      color: var(--white);
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+    .btn-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(90,46,141,0.3);
+    }
+    .table-responsive {
+      max-height: 600px;
+    }
+    canvas.chart-canvas {
+      display: block;
+      margin: auto;
+      width: 100% !important;
+      height: 600px !important;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+  <!-- صفحه ورود (Login Page) -->
+  <div id="loginPage" class="page-wrapper">
+    <!-- هدر برند -->
+    <header class="brand-header">
+      <div class="container text-center">
+        <img src="https://azarinsangalvand.com/wp-content/uploads/2024/12/Untitled-design-32.png" 
+             alt="لوگوی آذرین سنگ الوند" 
+             class="company-logo mb-4">
+        <h1 class="mb-3">داشبورد مدیریت معدن چاه دراز</h1>
+        <p class="mb-0 opacity-75">شرکت آذرین سنگ الوند</p>
+      </div>
+    </header>
+    <!-- کانتینر ورود -->
+    <main class="container">
+      <div class="login-container fade-in-up">
+        <div class="login-header">
+          <h2 class="mb-3" style="color: var(--primary);">ورود به سیستم</h2>
+          <p class="text-muted mb-0">لطفاً اطلاعات حساب کاربری خود را وارد کنید</p>
+        </div>
+        <form id="loginForm" class="login-form">
+          <div class="form-floating mb-4">
+            <input type="text" class="form-control" id="username" placeholder="نام کاربری" required>
+            <label for="username">نام کاربری</label>
+          </div>
+          <div class="form-floating mb-4">
+            <input type="password" class="form-control" id="password" placeholder="رمز عبور" required>
+            <label for="password">رمز عبور</label>
+          </div>
+          <button type="submit" class="btn btn-primary w-100" style="height: 50px;">
+            <div class="d-flex align-items-center justify-content-center">
+              <span class="loading-spinner" id="loginSpinner"></span>
+              <span class="btn-text">ورود به سیستم</span>
+            </div>
+          </button>
+        </form>
+      </div>
+    </main>
+    <!-- فوتر ورود -->
+    <footer class="footer">
+      <div class="container">
+        <p class="mb-0">© 2024 آذرین سنگ الوند | <a href="https://azarinsangalvand.com" target="_blank">وب‌سایت رسمی</a></p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- داشبورد (Dashboard Page) - به صورت اولیه مخفی است -->
+  <div id="dashboardContainer" style="display: none;">
+    <!-- نوار ناوبری -->
+    <nav class="navbar navbar-expand-lg navbar-custom mb-4">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="https://azarinsangalvand.com" target="_blank">
+          <img src="https://azarinsangalvand.com/wp-content/uploads/2024/12/Untitled-design-32.png" 
+               alt="لوگوی آذرین سنگ الوند" style="width: 50px; margin-left: 10px;">
+          آذرین سنگ الوند
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item"><a class="nav-link" href="#">داشبورد</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">گزارش‌ها</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">تنظیمات</a></li>
+          </ul>
+          <div class="d-flex">
+            <button class="btn btn-light" onclick="logout()">
+              <i class="ri-logout-box-r-line"></i> خروج
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- بخش آپلود فایل -->
+    <div id="uploadPrompt" class="container section">
+      <div class="alert alert-warning d-flex justify-content-between align-items-center" role="alert">
+        <span>لطفاً فایل خود را آپلود کنید.</span>
+        <div class="file-upload-wrapper">
+          <button type="button" class="upload-btn">انتخاب فایل</button>
+          <input type="file" id="excelFile" class="file-upload-input" accept=".xls,.xlsx">
+        </div>
+      </div>
+    </div>
+
+    <!-- محتوای اصلی داشبورد (ابتدا مخفی) -->
+    <div id="dashboardMain" class="container" style="display: none;">
+      <!-- عنوان داشبورد -->
+      <div class="text-center section">
+        <h2>داشبورد استخراج سنگ گچ</h2>
+        <p class="text-muted">معدن چاه دراز - شرکت آذرین سنگ الوند</p>
+      </div>
+
+      <!-- فیلتر و جستجو -->
+      <div class="row section mb-4">
+        <div class="col-md-3">
+          <label for="activityFilter" class="form-label">فیلتر بر اساس نوع فعالیت:</label>
+          <select id="activityFilter" class="form-select">
+            <option value="all">همه فعالیت‌ها</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="startDate" class="form-label">از تاریخ</label>
+          <input type="date" class="form-control" id="startDate">
+        </div>
+        <div class="col-md-3">
+          <label for="endDate" class="form-label">تا تاریخ</label>
+          <input type="date" class="form-control" id="endDate">
+        </div>
+        <div class="col-md-3">
+          <label for="searchInput" class="form-label">جستجو</label>
+          <input type="text" class="form-control" id="searchInput" placeholder="جستجو...">
+        </div>
+      </div>
+      <div class="row section mb-4">
+        <div class="col-12 text-end">
+          <button class="btn btn-custom" id="applyDateFilter">
+            <i class="ri-filter-3-line me-1"></i> اعمال فیلتر
+          </button>
+          <button class="btn btn-custom ms-2" id="exportExcel">
+            <i class="ri-file-excel-2-line me-1"></i> خروجی Excel
+          </button>
+          <button class="btn btn-custom ms-2" id="exportPDF">
+            <i class="ri-file-pdf-line me-1"></i> خروجی PDF
+          </button>
+        </div>
+      </div>
+
+      <!-- کارت‌های خلاصه -->
+      <div class="row section mb-4" id="summary-cards">
+        <div class="col-md-4 mb-3">
+          <div class="card text-white bg-primary">
+            <div class="card-body">
+              <h5 class="card-title">کل سرویس‌ها</h5>
+              <p class="card-text" id="total-services">0</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="card text-white bg-success">
+            <div class="card-body">
+              <h5 class="card-title">کل تناژ (تن)</h5>
+              <p class="card-text" id="total-tonnage">0</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="card text-white bg-info">
+            <div class="card-body">
+              <h5 class="card-title">تعداد فعالیت‌ها</h5>
+              <p class="card-text" id="total-activities">0</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- کارت‌های ماده معدنی و باطله -->
+      <div class="row section mb-4" id="material-cards">
+        <div class="col-md-6 mb-3">
+          <div class="card border-primary">
+            <div class="card-body">
+              <h5 class="card-title" style="color: var(--primary);">ماده معدنی</h5>
+              <p class="card-text">تناژ: <strong id="mineral-tonnage">0</strong> تن</p>
+              <p class="card-text">تعداد سرویس: <strong id="mineral-services">0</strong></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <div class="card border-primary">
+            <div class="card-body">
+              <h5 class="card-title" style="color: var(--primary);">باطله</h5>
+              <p class="card-text">تناژ: <strong id="waste-tonnage">0</strong> تن</p>
+              <p class="card-text">تعداد سرویس: <strong id="waste-services">0</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- نمودارها -->
+      <div class="row section mb-4">
+        <div class="col-md-6 mb-3">
+          <canvas id="tonnageChart" class="chart-canvas"></canvas>
+        </div>
+        <div class="col-md-6 mb-3">
+          <canvas id="servicesChart" class="chart-canvas"></canvas>
+        </div>
+      </div>
+      <div class="row section mb-4">
+        <div class="col-md-6 mb-3">
+          <canvas id="activityDoughnutChart" class="chart-canvas"></canvas>
+        </div>
+        <div class="col-md-6 mb-3">
+          <canvas id="combinedChart" class="chart-canvas"></canvas>
+        </div>
+      </div>
+      <div class="row section mb-4">
+        <div class="col-md-6 mb-3">
+          <canvas id="stackedChart" class="chart-canvas"></canvas>
+        </div>
+        <div class="col-md-6 mb-3">
+          <canvas id="comparisonChart" class="chart-canvas"></canvas>
+        </div>
+      </div>
+
+      <!-- تحلیل عملکرد -->
+      <div class="section mb-4">
+        <h3 class="text-center" style="color: var(--primary);">تحلیل عملکرد</h3>
+        <ul id="analysisList" class="list-group">
+          <!-- تحلیل‌ها به صورت داینامیک اضافه می‌شوند -->
+        </ul>
+      </div>
+
+      <!-- جدول داده‌ها -->
+      <div class="table-responsive section mb-4">
+        <table class="table table-bordered table-striped" id="dataTable">
+          <thead class="table-dark">
+            <tr>
+              <th>تاریخ</th>
+              <th>نوع فعالیت</th>
+              <th>نوع ماده</th>
+              <th>تجهیزات</th>
+              <th>ساعت شروع</th>
+              <th>ساعت پایان</th>
+              <th>تعداد سرویس</th>
+              <th>تناژ (تن)</th>
+              <th>توضیحات</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- داده‌ها به صورت داینامیک وارد می‌شوند -->
+          </tbody>
+        </table>
+      </div>
+    </div> <!-- پایان dashboardMain -->
+  </div> <!-- پایان dashboardContainer -->
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  
+  <script>
+    // تنظیمات Chart.js
+    Chart.defaults.font.family = 'Vazirmatn';
+    Chart.defaults.maintainAspectRatio = false;
+
+    const notyf = new Notyf();
+    let fullData = [];
+    let dataTable;
+    let tonnageChart, servicesChart, activityDoughnutChart, combinedChart, stackedChart, comparisonChart;
+
+    // فرم ورود
+    document.getElementById("loginForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const button = this.querySelector("button");
+      const buttonText = button.querySelector(".btn-text") || button.querySelector("span.btn-text") || button.querySelector("span");
+      
+      try {
+        button.disabled = true;
+        buttonText.textContent = "در حال ورود...";
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        if(username === "mahdimine83" && password === "Mahdi83@Mine"){
+          notyf.success("ورود موفقیت‌آمیز بود");
+          document.getElementById("loginPage").style.display = "none";
+          document.getElementById("dashboardContainer").style.display = "block";
+        } else {
+          throw new Error("نام کاربری یا رمز عبور اشتباه است");
+        }
+      } catch(error) {
+        notyf.error(error.message);
+      } finally {
+        button.disabled = false;
+        buttonText.textContent = "ورود به سیستم";
+      }
+    });
+
+    // آپلود فایل اکسل در داشبورد
+    document.getElementById("excelFile").addEventListener("change", function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: "array" });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        fullData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+        fullData = fullData.map(item => {
+          item["تعداد سرویس"] = parseFloat(item["تعداد سرویس"]) || 0;
+          item["تناژ (تن)"] = parseFloat(item["تناژ (تن)"]) || 0;
+          return item;
+        });
+        notyf.success("فایل Excel با موفقیت بارگذاری شد.");
+        initializeDashboard();
+        document.getElementById("uploadPrompt").style.display = "none";
+        document.getElementById("dashboardMain").style.display = "block";
+      };
+      reader.readAsArrayBuffer(file);
+    });
+
+    function initializeDashboard() {
+      populateFilter(fullData);
+      renderDashboard(fullData);
+      initializeDataTable(fullData);
+    }
+
+    function populateFilter(data) {
+      const filterSelect = document.getElementById("activityFilter");
+      filterSelect.innerHTML = '<option value="all">همه فعالیت‌ها</option>';
+      const activities = Array.from(new Set(data.map(item => item["نوع فعالیت"]).filter(a => a.trim() !== "")));
+      activities.sort();
+      activities.forEach(activity => {
+        const option = document.createElement("option");
+        option.value = activity;
+        option.innerText = activity;
+        filterSelect.appendChild(option);
+      });
+    }
+
+    function updateAnalysis(data) {
+      const dateMap = {};
+      data.forEach(item => {
+        const date = item["تاریخ"];
+        if (!dateMap[date]) {
+          dateMap[date] = { tonnage: 0, services: 0 };
+        }
+        dateMap[date].tonnage += item["تناژ (تن)"];
+        dateMap[date].services += item["تعداد سرویس"];
+      });
+      const dates = Object.keys(dateMap);
+      const daysCount = dates.length;
+      const totalTonnage = data.reduce((sum, item) => sum + item["تناژ (تن)"], 0);
+      const totalServices = data.reduce((sum, item) => sum + item["تعداد سرویس"], 0);
+      const avgTonnagePerDay = daysCount ? (totalTonnage / daysCount) : 0;
+      const avgServicesPerDay = daysCount ? (totalServices / daysCount) : 0;
+
+      let maxTonnage = 0, maxTonnageDate = "";
+      let maxServices = 0, maxServicesDate = "";
+      dates.forEach(date => {
+        if (dateMap[date].tonnage > maxTonnage) {
+          maxTonnage = dateMap[date].tonnage;
+          maxTonnageDate = date;
+        }
+        if (dateMap[date].services > maxServices) {
+          maxServices = dateMap[date].services;
+          maxServicesDate = date;
+        }
+      });
+
+      const analysisHTML = `
+        <li class="list-group-item">تعداد کل روزهای فعالیت: <strong>${daysCount}</strong></li>
+        <li class="list-group-item">تناژ کل تولیدی: <strong>${totalTonnage}</strong> تن</li>
+        <li class="list-group-item">تعداد کل سرویس‌ها: <strong>${totalServices}</strong></li>
+        <li class="list-group-item">متوسط تناژ تولیدی در روز: <strong>${avgTonnagePerDay.toFixed(2)}</strong> تن</li>
+        <li class="list-group-item">متوسط تعداد سرویس در روز: <strong>${avgServicesPerDay.toFixed(2)}</strong></li>
+        <li class="list-group-item">بیشترین تناژ در روز <strong>${maxTonnageDate}</strong>: <strong>${maxTonnage}</strong> تن</li>
+        <li class="list-group-item">بیشترین تعداد سرویس در روز <strong>${maxServicesDate}</strong>: <strong>${maxServices}</strong></li>
+      `;
+      document.getElementById("analysisList").innerHTML = analysisHTML;
+    }
+
+    function renderDashboard(data) {
+      const startDate = document.getElementById("startDate").value;
+      const endDate = document.getElementById("endDate").value;
+      let filteredData = data;
+      if (startDate) {
+        filteredData = filteredData.filter(item => item["تاریخ"] >= startDate);
+      }
+      if (endDate) {
+        filteredData = filteredData.filter(item => item["تاریخ"] <= endDate);
+      }
+
+      const totalServices = filteredData.reduce((sum, item) => sum + (item["تعداد سرویس"] || 0), 0);
+      const totalTonnage = filteredData.reduce((sum, item) => sum + (item["تناژ (تن)"] || 0), 0);
+      document.getElementById("total-services").innerText = totalServices;
+      document.getElementById("total-tonnage").innerText = totalTonnage;
+      document.getElementById("total-activities").innerText = filteredData.length;
+
+      let mineralTonnage = 0, mineralServices = 0;
+      let wasteTonnage = 0, wasteServices = 0;
+      filteredData.forEach(item => {
+        const material = item["نوع ماده"].trim();
+        if (material === "ماده معدنی") {
+          mineralTonnage += item["تناژ (تن)"];
+          mineralServices += item["تعداد سرویس"];
+        } else if (material === "باطله") {
+          wasteTonnage += item["تناژ (تن)"];
+          wasteServices += item["تعداد سرویس"];
+        }
+      });
+      document.getElementById("mineral-tonnage").innerText = mineralTonnage;
+      document.getElementById("mineral-services").innerText = mineralServices;
+      document.getElementById("waste-tonnage").innerText = wasteTonnage;
+      document.getElementById("waste-services").innerText = wasteServices;
+
+      updateAnalysis(filteredData);
+
+      const dateMap = {};
+      filteredData.forEach(item => {
+        const date = item["تاریخ"];
+        if (!dateMap[date]) dateMap[date] = { services: 0, tonnage: 0 };
+        dateMap[date].services += item["تعداد سرویس"];
+        dateMap[date].tonnage += item["تناژ (تن)"];
+      });
+      const dates = Object.keys(dateMap).sort();
+      const servicesData = dates.map(date => dateMap[date].services);
+      const tonnageData = dates.map(date => dateMap[date].tonnage);
+
+      if (tonnageChart) tonnageChart.destroy();
+      const ctxTonnage = document.getElementById("tonnageChart").getContext("2d");
+      const gradientTonnage = ctxTonnage.createLinearGradient(0, 0, 0, 600);
+      gradientTonnage.addColorStop(0, 'rgba(90,46,141,0.5)');
+      gradientTonnage.addColorStop(1, 'rgba(90,46,141,0.1)');
+      tonnageChart = new Chart(ctxTonnage, {
+        type: 'line',
+        data: {
+          labels: dates,
+          datasets: [{
+            label: 'تناژ (تن)',
+            data: tonnageData,
+            backgroundColor: gradientTonnage,
+            borderColor: 'rgba(90,46,141,1)',
+            fill: true,
+            tension: 0.4,
+            pointRadius: 4,
+            pointHoverRadius: 6
+          }]
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          plugins: {
+            datalabels: { display: false },
+            title: { display: true, text: 'تناژ تولیدی در بازه‌های زمانی', color: '#5a2e8d', font: { size: 16 } },
+            tooltip: {
+              callbacks: {
+                label: context => `تناژ: ${context.parsed.y} تن`
+              }
+            }
+          },
+          scales: { y: { beginAtZero: true } }
+        },
+        plugins: [ChartDataLabels]
+      });
+
+      if (servicesChart) servicesChart.destroy();
+      const ctxServices = document.getElementById("servicesChart").getContext("2d");
+      servicesChart = new Chart(ctxServices, {
+        type: 'bar',
+        data: {
+          labels: dates,
+          datasets: [{
+            label: 'تعداد سرویس',
+            data: servicesData,
+            backgroundColor: 'rgba(90,46,141,0.2)',
+            borderColor: 'rgba(90,46,141,1)',
+            borderWidth: 1,
+            borderRadius: 5
+          }]
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          plugins: {
+            datalabels: {
+              anchor: 'end',
+              align: 'top',
+              color: '#5a2e8d',
+              font: { weight: 'bold' },
+              formatter: value => value
+            },
+            title: { display: true, text: 'تعداد سرویس‌ها در بازه‌های زمانی', color: '#5a2e8d', font: { size: 16 } },
+            tooltip: {
+              callbacks: {
+                label: context => `سرویس: ${context.parsed.y}`
+              }
+            }
+          },
+          scales: { y: { beginAtZero: true } }
+        },
+        plugins: [ChartDataLabels]
+      });
+
+      if (activityDoughnutChart) activityDoughnutChart.destroy();
+      const activityDistribution = {};
+      filteredData.forEach(item => {
+        const activity = item["نوع فعالیت"] ? item["نوع فعالیت"] : "نامشخص";
+        if (!activityDistribution[activity]) activityDistribution[activity] = 0;
+        activityDistribution[activity] += 1;
+      });
+      const activityLabels = Object.keys(activityDistribution);
+      const activityCounts = activityLabels.map(label => activityDistribution[label]);
+      const ctxDoughnut = document.getElementById("activityDoughnutChart").getContext("2d");
+      activityDoughnutChart = new Chart(ctxDoughnut, {
+        type: 'doughnut',
+        data: {
+          labels: activityLabels,
+          datasets: [{
+            data: activityCounts,
+            backgroundColor: [
+              'rgba(90,46,141,0.7)',
+              'rgba(255,99,132,0.7)',
+              'rgba(54,162,235,0.7)',
+              'rgba(255,206,86,0.7)',
+              'rgba(75,192,192,0.7)',
+              'rgba(153,102,255,0.7)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          plugins: {
+            datalabels: {
+              color: '#fff',
+              formatter: (value, ctx) => {
+                let sum = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                let percentage = ((value * 100) / sum).toFixed(1) + "%";
+                return percentage;
+              }
+            },
+            title: { display: true, text: 'توزیع فعالیت‌ها', color: '#5a2e8d', font: { size: 16 } },
+            legend: { position: 'bottom' }
+          }
+        },
+        plugins: [ChartDataLabels]
+      });
+
+      if (combinedChart) combinedChart.destroy();
+      const ctxCombined = document.getElementById("combinedChart").getContext("2d");
+      combinedChart = new Chart(ctxCombined, {
+        data: {
+          labels: dates,
+          datasets: [
+            {
+              type: 'bar',
+              label: 'تعداد سرویس',
+              data: servicesData,
+              backgroundColor: 'rgba(90,46,141,0.4)',
+              borderColor: 'rgba(90,46,141,1)',
+              borderWidth: 1,
+              borderRadius: 4
+            },
+            {
+              type: 'line',
+              label: 'تناژ (تن)',
+              data: tonnageData,
+              backgroundColor: 'rgba(90,46,141,0.2)',
+              borderColor: 'rgba(90,46,141,1)',
+              fill: false,
+              tension: 0.3,
+              pointStyle: 'circle',
+              pointRadius: 4
+            }
+          ]
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          plugins: {
+            datalabels: { display: false },
+            title: { display: true, text: 'مقایسه تعداد سرویس و تناژ در بازه‌های زمانی', color: '#5a2e8d', font: { size: 16 } },
+            tooltip: { mode: 'index', intersect: false }
+          },
+          scales: { y: { beginAtZero: true } }
+        },
+        plugins: [ChartDataLabels]
+      });
+
+      let stackedData = {};
+      filteredData.forEach(item => {
+        const date = item["تاریخ"];
+        const material = item["نوع ماده"].trim();
+        if(material === "ماده معدنی" || material === "باطله"){
+          if(!stackedData[date]) {
+            stackedData[date] = { mineral: 0, waste: 0 };
+          }
+          if(material === "ماده معدنی"){
+            stackedData[date].mineral += item["تناژ (تن)"];
+          }
+          if(material === "باطله"){
+            stackedData[date].waste += item["تناژ (تن)"];
+          }
+        }
+      });
+      const stackedDates = Object.keys(stackedData).sort();
+      const stackedMineralData = stackedDates.map(date => stackedData[date].mineral);
+      const stackedWasteData = stackedDates.map(date => stackedData[date].waste);
+      if (stackedChart) stackedChart.destroy();
+      const ctxStacked = document.getElementById("stackedChart").getContext("2d");
+      stackedChart = new Chart(ctxStacked, {
+        type: 'bar',
+        data: {
+          labels: stackedDates,
+          datasets: [
+            {
+              label: 'ماده معدنی',
+              data: stackedMineralData,
+              backgroundColor: 'rgba(90,46,141,0.6)'
+            },
+            {
+              label: 'باطله',
+              data: stackedWasteData,
+              backgroundColor: 'rgba(255,99,132,0.6)'
+            }
+          ]
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          plugins: {
+            title: { display: true, text: 'تفکیک تناژ ماده معدنی و باطله در بازه‌های زمانی', color: '#5a2e8d', font: { size: 16 } },
+            tooltip: { mode: 'index', intersect: false },
+            datalabels: {
+              color: '#fff',
+              formatter: value => value
+            }
+          },
+          scales: {
+            x: { stacked: true },
+            y: { stacked: true, beginAtZero: true }
+          }
+        },
+        plugins: [ChartDataLabels]
+      });
+
+      if (comparisonChart) comparisonChart.destroy();
+      const ctxComparison = document.getElementById("comparisonChart").getContext("2d");
+      comparisonChart = new Chart(ctxComparison, {
+        type: 'bar',
+        data: {
+          labels: ['تناژ (تن)', 'تعداد سرویس'],
+          datasets: [
+            {
+              label: 'ماده معدنی',
+              data: [mineralTonnage, mineralServices],
+              backgroundColor: 'rgba(90,46,141,0.6)'
+            },
+            {
+              label: 'باطله',
+              data: [wasteTonnage, wasteServices],
+              backgroundColor: 'rgba(255,99,132,0.6)'
+            }
+          ]
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          plugins: {
+            title: { display: true, text: 'مقایسه میانگین‌های کلی ماده معدنی و باطله', color: '#5a2e8d', font: { size: 16 } },
+            tooltip: { mode: 'index', intersect: false },
+            datalabels: {
+              color: '#fff',
+              formatter: value => value
+            }
+          },
+          scales: { y: { beginAtZero: true } }
+        },
+        plugins: [ChartDataLabels]
+      });
+
+      if (dataTable) {
+        dataTable.clear().rows.add(filteredData).draw();
+      }
+    }
+
+    function initializeDataTable(data) {
+      if ($.fn.DataTable.isDataTable('#dataTable')) {
+        dataTable.clear().rows.add(data).draw();
+      } else {
+        dataTable = $('#dataTable').DataTable({
+          data: data,
+          columns: [
+            { data: 'تاریخ' },
+            { data: 'نوع فعالیت' },
+            { data: 'نوع ماده' },
+            { data: 'تجهیزات' },
+            { data: 'ساعت شروع' },
+            { data: 'ساعت پایان' },
+            { data: 'تعداد سرویس' },
+            { data: 'تناژ (تن)' },
+            { data: 'توضیحات' }
+          ],
+          language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/fa.json'
+          }
+        });
+      }
+    }
+
+    document.getElementById("activityFilter").addEventListener("change", applyFilters);
+    document.getElementById("searchInput").addEventListener("keyup", applyFilters);
+    document.getElementById("applyDateFilter").addEventListener("click", applyFilters);
+
+    function applyFilters() {
+      const activityValue = document.getElementById("activityFilter").value;
+      const searchValue = document.getElementById("searchInput").value.toLowerCase();
+      const startDate = document.getElementById("startDate").value;
+      const endDate = document.getElementById("endDate").value;
+
+      let filteredData = fullData.filter(item => {
+        const activityMatch = (activityValue === "all" || item["نوع فعالیت"] === activityValue);
+        const searchMatch = Object.values(item).some(val =>
+          String(val).toLowerCase().includes(searchValue)
+        );
+        return activityMatch && searchMatch;
+      });
+
+      if (startDate) {
+        filteredData = filteredData.filter(item => item["تاریخ"] >= startDate);
+      }
+      if (endDate) {
+        filteredData = filteredData.filter(item => item["تاریخ"] <= endDate);
+      }
+
+      renderDashboard(filteredData);
+      if (dataTable) {
+        dataTable.clear().rows.add(filteredData).draw();
+      }
+    }
+
+    document.getElementById("exportExcel").addEventListener("click", function() {
+      if (fullData.length === 0) return;
+      const ws = XLSX.utils.json_to_sheet(fullData);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Data");
+      XLSX.writeFile(wb, "mining_data.xlsx");
+      notyf.success("داده‌ها به صورت Excel خروجی گرفته شدند.");
+    });
+
+    document.getElementById("exportPDF").addEventListener("click", function() {
+      if (fullData.length === 0) return;
+      const element = document.getElementById("dataTable");
+      const opt = {
+        margin: 0.3,
+        filename: 'mining_data.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, logging: true },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+      };
+      html2pdf().set(opt).from(element).save().then(() => {
+        notyf.success("داده‌ها به صورت PDF خروجی گرفته شدند.");
+      });
+    });
+
+    // تابع خروج (Logout)
+    function logout(){
+      window.location.reload();
+    }
+  </script>
+</body>
+</html>
